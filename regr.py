@@ -28,16 +28,17 @@ def ExtractData(df, IsTrain):
     data['D'] = Yeras['D']    
     return data
 
-def ConsolidateStoresData (storesdf, datadf):
+def ConsolidateStoresData (storesdf, datadf, IsTrain):
     if (IsTrain):
-        data = pd.merge()
-    else: 
+        datadf = pd.merge(datadf,storesdf,on='Store')
+    else:
+        datadf = pd.merge(datadf,storesdf,on='Id') 
 
 
 stores = pd.read_csv(r"E:\kaggle\STORES\store.csv", low_memory = False)
 df = pd.read_csv(r"E:\kaggle\STORES\train.csv", low_memory = False)
 
-ConsolidateStoresData(stores, df)
+#ConsolidateStoresData(stores, df, True)
 data = ExtractData(df, True)
 labels = df["Sales"]
 np_data = data.as_matrix()
@@ -47,6 +48,7 @@ if DOBIG == False:
 
 
 dftest = pd.read_csv(r"E:\kaggle\STORES\test.csv")
+#ConsolidateStoresData(stores, dftest, False)
 
 if DOBIG:
     dftest = dftest.fillna(0)
